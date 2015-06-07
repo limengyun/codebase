@@ -30,27 +30,21 @@ import butterknife.InjectView;
 /**
  * @author limy
  */
-public class MainFragment extends Fragment {
+public class ArticleFragment extends Fragment {
 
   @InjectView(R.id.recycler_view)
   RecyclerView recyclerView;
 
-  @InjectView(R.id.toolbar)
-  Toolbar toolbar;
-
-  @InjectView(R.id.swipe_refresh)
-  SwipeRefreshLayout swipeRefreshLayout;
-
   private LinearLayoutManager layoutManager;
   private ListAdapter adapter;
 
-  public MainFragment() {
+  public ArticleFragment() {
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.cb_fragment_main, container, false);
+    return inflater.inflate(R.layout.cb_fragment_article, container, false);
   }
 
   @Override
@@ -58,40 +52,7 @@ public class MainFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
     ButterKnife.inject(this, view);
 
-    initToolbar();
     initRecyclerView();
-
-    swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-      @Override
-      public void onRefresh() {
-        swipeRefreshLayout.postDelayed(new Runnable() {
-          @Override
-          public void run() {
-            swipeRefreshLayout.setRefreshing(false);
-          }
-        }, 2000);
-      }
-    });
-  }
-
-  private void initToolbar() {
-    toolbar.setTitle(getActivity().getTitle());
-    toolbar.setTitleTextColor(getResources().getColor(R.color.text_color_white));
-    toolbar.inflateMenu(R.menu.menu_main);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override
-      public boolean onMenuItemClick(MenuItem item) {
-        int itemId = item.getItemId();
-        switch (itemId) {
-          case R.id.action_settings:
-            NavigationManager.navigateToSettings(getActivity());
-            break;
-          default:
-            break;
-        }
-        return false;
-      }
-    });
   }
 
   private void initRecyclerView() {
@@ -103,12 +64,12 @@ public class MainFragment extends Fragment {
     adapter = new ListAdapter();
     List<Model> models = new ArrayList<>();
     for (int i = 0; i < 100; i++) {
-      Model model = new Model(Type.POST);
-      if (i == 0 || i == 13) {
-        model = new Model(Type.DATE);
-      }
+      Model model = new Model(Type.IMAGE);
 
       model.url = MockUtil.getWDJAvatarUrl(i);
+      model.width = 500;
+      model.height = 500;
+
       models.add(model);
     }
     adapter.setData(models);

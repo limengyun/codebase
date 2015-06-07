@@ -1,7 +1,5 @@
 package com.limy.codebase.common;
 
-import android.util.Log;
-
 import timber.log.Timber;
 
 /**

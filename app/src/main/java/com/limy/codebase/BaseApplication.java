@@ -2,6 +2,7 @@ package com.limy.codebase;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.limy.codebase.common.App;
 import com.limy.codebase.common.CrashLogTree;
 import com.limy.codebase.common.ExceptionHandler;
@@ -18,7 +19,7 @@ public class BaseApplication extends Application {
 
   private static BaseApplication INSTANCE;
 
-  private ExecutorService executorService;
+  private ExecutorService executorService = Executors.newCachedThreadPool();
 
   public static BaseApplication getInstance() {
     return INSTANCE;
@@ -31,22 +32,14 @@ public class BaseApplication extends Application {
 
     App.initInstance(this);
 
-    // 初始化必要组件
-    initComponents();
-
     // Timber 中的CrashReportingTree 依赖App
     initTimber();
 
     // 初始化ExceptionHandler 依赖Timber
     initExceptionHandler();
-  }
 
-  private void initComponents() {
-    executorService = Executors.newCachedThreadPool();
-  }
-
-  private void initExceptionHandler() {
-    Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+    // 初始化必要组件
+    initComponents();
   }
 
   private void initTimber() {
@@ -56,6 +49,14 @@ public class BaseApplication extends Application {
       // TODO: plan release tree.
     }
     Timber.plant(new CrashLogTree());
+  }
+
+  private void initExceptionHandler() {
+    Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+  }
+
+  private void initComponents() {
+    Fresco.initialize(this);
   }
 
   public ExecutorService getExecutorService() {

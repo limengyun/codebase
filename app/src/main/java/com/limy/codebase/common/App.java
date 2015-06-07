@@ -65,6 +65,14 @@ public class App {
         "packageName='" + packageName + '\'' +
         ", versionName='" + versionName + '\'' +
         ", versionCode=" + versionCode +
+        ", model='" + model + '\'' +
+        ", manufacturer='" + manufacturer + '\'' +
+        ", IMEI='" + IMEI + '\'' +
+        ", sdkVersionName='" + sdkVersionName + '\'' +
+        ", sdkVersionInt=" + sdkVersionInt +
+        ", language='" + language + '\'' +
+        ", country='" + country + '\'' +
+        ", externalDir=" + externalDir +
         '}';
   }
 }
