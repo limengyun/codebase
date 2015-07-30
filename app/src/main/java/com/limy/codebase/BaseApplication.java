@@ -6,6 +6,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.limy.codebase.common.App;
 import com.limy.codebase.common.CrashLogTree;
 import com.limy.codebase.common.ExceptionHandler;
+import com.limy.codebase.common.LocalLogTree;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,6 +46,7 @@ public class BaseApplication extends Application {
   private void initTimber() {
     if (BuildConfig.DEBUG) {
       Timber.plant(new Timber.DebugTree());
+      Timber.plant(new LocalLogTree());
     } else {
       // TODO: plan release tree.
     }
